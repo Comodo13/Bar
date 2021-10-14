@@ -7,8 +7,10 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -18,7 +20,6 @@ import java.util.Set;
 @Table(name="bar_orders")
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
     private Integer id;
     @ManyToMany(cascade = { CascadeType.ALL })
@@ -28,8 +29,9 @@ public class Order {
             joinColumns = { @JoinColumn(name = "order_id") },
             inverseJoinColumns = { @JoinColumn(name = "drink_id") }
     )
-    private Set<Drink> drinks = new HashSet<>();
-    @OneToOne
+    private List<Drink> drinks = new ArrayList<>();
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
     private Customer customer;
 
 

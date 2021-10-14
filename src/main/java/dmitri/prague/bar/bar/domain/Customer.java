@@ -15,7 +15,6 @@ import javax.persistence.*;
 
 public class Customer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="customer_id")
     private Integer id;
     @Column(name="customer_name")
@@ -24,7 +23,8 @@ public class Customer {
     private Integer money;
     @Column(name="is_adult")
     private boolean isAdult;
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
     private Order order;
 }
 
